@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 // Global Variables
 int SIZE = 9;
@@ -46,12 +47,25 @@ void printPuzzle(int puzzle[SIZE][SIZE])
 
 int returnValidNumber(int puzzle[SIZE][SIZE], int x, int y)
 {
-        int validNumbers[10] = { 1 };
+        int toReturn = -1;
+        int index;
+        int validNumbers[10] = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
         // Numbers valid in current row
         for(int i = 0; i < SIZE; i++){
-                validNumbers[puzzle[y][i]] = 0;
+                index = puzzle[y][i];
+                validNumbers[index] = 0;
         }
 
-        return rand() % (10 - 1) + 1;
+        bool found = false;
+
+        for(int i = 0; i < 10; i++){
+                if(!found && validNumbers[i] == 1){
+                        toReturn = i;
+                        found = true;
+                }
+        }
+
+        return toReturn;
+        //return rand() % (10 - 1) + 1;
 }
